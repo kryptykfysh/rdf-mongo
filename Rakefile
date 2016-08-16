@@ -16,7 +16,7 @@ end
 
 desc 'Run specifications'
 RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.rspec_opts = %w(--options spec/spec.opts) if File.exists?('spec/spec.opts')
+  spec.rspec_opts = %w(--options spec/spec.opts) if File.exist?('spec/spec.opts')
 end
 
 desc "Run specs through RCov"

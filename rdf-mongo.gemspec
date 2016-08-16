@@ -14,8 +14,10 @@ Gem::Specification.new do |gem|
   gem.name               = 'rdf-mongo'
   gem.homepage           = 'http://ruby-rdf.github.com/rdf-mongo'
   gem.license            = 'MIT' if gem.respond_to?(:license=)
-  gem.summary            = 'A storage adapter for integrating MongoDB and rdf.rb, a Ruby library for working with Resource Description Framework (RDF) data.'
-  gem.description        = 'rdf-mongo is a storage adapter for integrating MongoDB and rdf.rb, a Ruby library for working with Resource Description Framework (RDF) data.'
+  gem.summary            = 'A storage adapter for integrating MongoDB and rdf.rb, a Ruby library for working with ' \
+                           'Resource Description Framework (RDF) data.'
+  gem.description        = 'rdf-mongo is a storage adapter for integrating MongoDB and rdf.rb, a Ruby library for ' \
+                           'working with Resource Description Framework (RDF) data.'
 
   gem.authors            = ['Pius Uzamere', 'Gregg Kellogg']
   gem.email              = ['pius@alum.mit.edu', 'gregg@greggkellogg.net']
@@ -35,6 +37,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rdf-spec',        '~> 2.0'
   gem.add_development_dependency 'rspec',           '~> 3.4'
   gem.add_development_dependency 'rspec-its',       '~> 1.2'
+  gem.add_development_dependency 'rubocop',         '~> 0.42'
   gem.add_development_dependency 'yard',            '~> 0.8'
 
   # Rubinius has it's own dependencies

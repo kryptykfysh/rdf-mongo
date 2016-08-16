@@ -80,7 +80,7 @@ module RDF
           t, k1, lt = :ct, :c, :cl
         end
         h = {k1 => v, t => k, lt => ll}
-        h.delete_if {|kk,_| h[kk].nil?}
+        h.delete_if { |kk,_| h[kk].nil?}
       end
 
       ##
@@ -122,11 +122,16 @@ module RDF
       #   @param  [Hash{Symbol => Object}] options
       #   @option options [String, #to_s] :title (nil)
       #   @option options [URI, #to_s]    :uri (nil)
-      #     URI in the form `mongodb://host:port/db`. The URI should also identify the collection use, but appending a `collection` path component such as `mongodb://host:port/db/collection`, this ensures that the collection will be maintained if cloned. See [Mongo::Client options](https://docs.mongodb.org/ecosystem/tutorial/ruby-driver-tutorial-2-0/#uri-options-conversions) for more information on Mongo URIs.
+      #     URI in the form `mongodb://host:port/db`. The URI should also identify the collection use, but appending a
+      #     `collection` path component such as `mongodb://host:port/db/collection`, this ensures that the collection
+      #     will be maintained if cloned.
+      #     See [Mongo::Client options](https://docs.mongodb.org/ecosystem/tutorial/ruby-driver-tutorial-2-0/#uri-options-conversions)
+      #     for more information on Mongo URIs.
       #
       # @overload initialize(options = {}, &block)
       #   @param  [Hash{Symbol => Object}] options
-      #     See [Mongo::Client options](https://docs.mongodb.org/ecosystem/tutorial/ruby-driver-tutorial-2-0/#uri-options-conversions) for more information on Mongo Client options.
+      #     See [Mongo::Client options](https://docs.mongodb.org/ecosystem/tutorial/ruby-driver-tutorial-2-0/#uri-options-conversions)
+      #     for more information on Mongo Client options.
       #   @option options [String, #to_s] :title (nil)
       #   @option options [String] :host
       #     a single address or an array of addresses, which may contain a port designation
@@ -137,21 +142,21 @@ module RDF
       # @yield  [repository]
       # @yieldparam [Repository] repository
       def initialize(options = {}, &block)
-        collection = nil
         if options[:uri]
           options = options.dup
           uri = RDF::URI(options.delete(:uri))
           _, db, coll = uri.path.split('/')
-          collection = coll || options.delete(:collection)
+          options.delete(:collection) unless coll
           db ||= "quadb"
           uri.path = "/#{db}" if coll
           @client = ::Mongo::Client.new(uri.to_s, options)
         else
-          warn "[DEPRECATION] RDF::Mongo::Repository#initialize expects a uri argument. Called from #{Gem.location_of_caller.join(':')}" unless options.empty?
+          warn "[DEPRECATION] RDF::Mongo::Repository#initialize expects a uri argument. Called from " \
+            "#{Gem.location_of_caller.join(':')}" unless options.empty?
           options[:database] ||= options.delete(:db) # 1.x compat
           options[:database] ||= 'quadb'
           hosts = Array(options[:host] || 'localhost')
-          hosts.map! {|h| "#{h}:#{options[:port]}"} if options[:port]
+          hosts.map! { |h| "#{h}:#{options[:port]}"} if options[:port]
           @client = ::Mongo::Client.new(hosts, options)
         end
 

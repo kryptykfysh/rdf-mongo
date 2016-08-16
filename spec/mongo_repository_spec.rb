@@ -26,10 +26,12 @@ describe RDF::Mongo::Repository do
 
   context "problemantic examples" do
     subject {@repository}
+    sub = '<http://repository.librario.de/publications/0cbdc7f4-728d-4f85-ab09-01060c7b2922>'
+    predicate = '<http://purl.org/ontology/bibo/abstract>'
+    obj = 'a' * 1001
+    large_triplet = %(#{sub} #{predicate} "#{obj}" .)
     {
-      "Insert key too large to index" => %(
-        <http://repository.librario.de/publications/0cbdc7f4-728d-4f85-ab09-01060c7b2922> <http://purl.org/ontology/bibo/abstract> "#{'a' * 1001}" .
-      )
+      "Insert key too large to index" => large_triplet
     }.each do |name, nt|
       it name do
         expect {subject << RDF::Graph.new << RDF::NTriples::Reader.new(nt)}.not_to raise_error
